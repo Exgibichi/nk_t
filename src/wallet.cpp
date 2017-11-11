@@ -36,8 +36,8 @@ bool bSpendZeroConfChange = true;
 bool fSendFreeTransactions = false;
 bool fPayAtLeastCustomFee = true;
 
-/** 
- * Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) 
+/**
+ * Fees smaller than this (in satoshi) are considered zero fee (for transaction creation)
  * Override with -mintxfee
  */
 CFeeRate CWallet::minTxFee = CFeeRate(1000);
@@ -1355,8 +1355,8 @@ bool CWallet::SelectCoinsMinConf(const CAmount& nTargetValue, int nConfMine, int
     coinLowestLarger.second.first = NULL;
     vector<pair<CAmount, pair<const CWalletTx*,unsigned int> > > vValue;
     CAmount nTotalLower = 0;
-    static int sortir = -1; 
-    if(sortir < 0) 
+    static int sortir = -1;
+    if(sortir < 0)
 	GetArg("-sortir", 0);
 
     switch(sortir) {
@@ -1430,7 +1430,7 @@ bool CWallet::SelectCoinsMinConf(const CAmount& nTargetValue, int nConfMine, int
 
   // Maximap DP array size
   static uint32_t nMaxDP = 0;
-  if(nMaxDP == 0) 
+  if(nMaxDP == 0)
       nMaxDP = GetArg("-maxdp", 8 * 1024 * 1024);
 
   uint16_t *dp;	// dynamic programming array
@@ -1468,7 +1468,7 @@ bool CWallet::SelectCoinsMinConf(const CAmount& nTargetValue, int nConfMine, int
 
     while(min_over_sum) {
       uint16_t utxo_no = min_over_utxo - 1;
-      if (fDebug && GetBoolArg("-printselectcoin", false)) 
+      if (fDebug && GetBoolArg("-printselectcoin", false))
         LogPrintf("SelectCoins() DP Added #%u: Val=%s\n", utxo_no, FormatMoney(vValue[utxo_no].first));
       setCoinsRet.insert(vValue[utxo_no].second);
       nValueRet += vValue[utxo_no].first;
@@ -1480,7 +1480,7 @@ bool CWallet::SelectCoinsMinConf(const CAmount& nTargetValue, int nConfMine, int
 
     if(nValueRet >= nTargetValue) {
       //// debug print
-      if (fDebug && GetBoolArg("-printselectcoin", false)) 
+      if (fDebug && GetBoolArg("-printselectcoin", false))
         LogPrintf("SelectCoins() DP subset: Target=%s Found=%s Payback=%s Qty=%u\n",
             FormatMoney(nTargetValue),
             FormatMoney(nValueRet),
@@ -1788,7 +1788,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     // The following split & combine thresholds are important to security
     // Should not be adjusted if you don't understand the consequences
     static unsigned int nStakeSplitAge = (60 * 60 * 24 * 90);
-    CAmount nPoWReward = GetProofOfWorkReward(GetLastBlockIndex(chainActive.Tip(), false)->nBits);
+    CAmount nPoWReward = GetProofOfWorkReward(GetLastBlockIndex(chainActive.Tip(), false)->nHeight);
     CAmount nCombineThreshold = nPoWReward / 3;
 
 
@@ -1841,7 +1841,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         if (pbo == NULL || pbo->value.first == NULL) {
           CDiskTxPos postx;
           CBlockHeader *cbh = (CBlockHeader *)0x1; // default=Error
-          if(pblocktree->ReadTxIndex(tx_hash, postx)) { 
+          if(pblocktree->ReadTxIndex(tx_hash, postx)) {
             // Read block header
             CAutoFile file(OpenBlockFile(postx, true), SER_DISK, CLIENT_VERSION);
             cbh = new CBlockHeader;
@@ -2207,7 +2207,7 @@ bool CWallet::SetDefaultKey(const CPubKey &vchPubKey)
 
 /**
  * Mark old keypool keys as used,
- * and generate all new keys 
+ * and generate all new keys
  */
 bool CWallet::NewKeyPool()
 {
